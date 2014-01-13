@@ -742,9 +742,13 @@ function my_home_get_posts($query) {
 
 function my_home_the_content($content) {
 	if(is_home()) {
-		// Unfortunately, <p></p> is still there
-		$needle = "<strong>Description</strong><br/>";
-		$tmp_content = str_replace($needle, 'my_home_content_remove', $content);
+		// My local dev site has <br/> 
+    $needle = "<strong>Description</strong><br/>";
+    $tmp_content = str_replace($needle, 'my_home_content_remove', $content);
+
+    // Online dev site does NOT have <br/>, not sure why.
+    $needle = "<strong>Description</strong>";
+    $tmp_content = str_replace($needle, 'my_home_content_remove', $content);
 
 		// Remove the tag
 		$document = new \DomDocument('1.0', 'UTF-8');
