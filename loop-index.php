@@ -53,7 +53,6 @@
 	 *
 	 * Without further ado, the loop:
 	 */ ?>
-
 <?php while ( have_posts() ) : the_post(); ?>
 
 <?php /* How to display posts of the Gallery format. The gallery category is the old way. */ ?>
@@ -128,6 +127,15 @@
 <?php /* How to display all other posts. */ ?>
 
 	<?php else : ?>
+		<?php
+			$post_id = get_the_ID();
+			$post_obj = get_post($post_id);
+			$post_type = $post_obj->post_type;
+			$meta = get_post_meta($post_id);
+			$event_start_end_time = $meta['event_start_end_time'][0];
+			$event_location = $meta['event_location'][0];
+		?>
+
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 			<h2 class="entry-title"><a href="<?php the_permalink(); ?>" title="<?php printf( esc_attr__( 'Permalink to %s', 'twentyten' ), the_title_attribute( 'echo=0' ) ); ?>" rel="bookmark"><?php the_title(); ?></a></h2>
 
@@ -139,6 +147,10 @@
 	<?php else : ?>
 			<div class="entry-content">
 				<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
+			
+				<?php echo twentyten_home_uom_event_time($post_type, $event_start_end_time); ?>
+				<?php echo twentyten_home_uom_event_location($post_type, $event_location); ?>
+
 				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>
 			</div><!-- .entry-content -->
 	<?php endif; ?>

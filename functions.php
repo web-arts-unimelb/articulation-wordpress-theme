@@ -1,6 +1,7 @@
 <?php
 
-$the_host = 'http://localhost/test/testme/articulation';
+include_once('config.php');
+
 update_option('siteurl', $the_host);
 update_option('home', $the_host);
 
@@ -736,6 +737,13 @@ function _display_entity_banner($category_id)
 function my_home_get_posts($query) {
 	if(is_home() && $query->is_main_query()) {
     $query->set('post_type', array('post', 'uom_event'));
+
+		//test
+		/*
+		echo "<pre>";
+		print_r($query);
+		echo "</pre>";
+		*/
 	}
   return $query;
 }
@@ -770,4 +778,28 @@ function my_home_the_content($content) {
 		// Original
 		return $content;
 	}
+}
+
+function twentyten_home_uom_event_time($post_type, $event_start_end_time) {
+	$html = '';
+	if($post_type === 'uom_event') {
+		$html = $event_start_end_time;
+	}
+	else {
+		return $html = '';
+	}
+
+	return $html;
+}
+
+function twentyten_home_uom_event_location($post_type, $event_location) {
+	$html = '';
+  if($post_type === 'uom_event') {
+    $html = $event_location;
+  }
+  else {
+    return $html = '';
+  }
+
+  return $html;
 }
