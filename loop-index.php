@@ -146,10 +146,11 @@
 			</div><!-- .entry-summary -->
 	<?php else : ?>
 			<div class="entry-content">
-				<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
-			
-				<?php echo twentyten_home_uom_event_time($post_type, $event_start_end_time); ?>
-				<?php echo twentyten_home_uom_event_location($post_type, $event_location); ?>
+				<?php //the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
+				<?php echo html_entity_decode( get_post_field('post_content', $post_id) ); ?>			
+
+				<?php echo html_entity_decode( twentyten_home_uom_event_time($post_type, $event_start_end_time) ); ?>
+				<?php echo html_entity_decode( twentyten_home_uom_event_location($post_type, $event_location) ); ?>
 
 				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>
 			</div><!-- .entry-content -->

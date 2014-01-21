@@ -803,3 +803,4 @@ function twentyten_home_uom_event_location($post_type, $event_location) {
 
   return $html;
 }
+
