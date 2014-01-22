@@ -749,6 +749,9 @@ function my_home_get_posts($query) {
 }
 
 function my_home_the_content($content) {
+	/*
+		NOTE: comment the code, since the find and replace is not working, after encoding html into db
+
 	if(is_home()) {
 		// My local dev site has <br/> 
     $needle = "<strong>Description</strong><br/>";
@@ -773,17 +776,20 @@ function my_home_the_content($content) {
 
 		$tmp_content = $document->saveHTML();
 
-		return $tmp_content;  
+		return $tmp_content;
 	} else {
 		// Original
 		return $content;
 	}
+	*/
+
+	return $content;	
 }
 
-function twentyten_home_uom_event_time($post_type, $event_start_end_time) {
+function twentyten_home_uom_event_entity_html($post_type, $event_entity_html) {
 	$html = '';
 	if($post_type === 'uom_event') {
-		$html = $event_start_end_time;
+		$html = $event_entity_html;
 	}
 	else {
 		return $html = '';
@@ -791,16 +797,3 @@ function twentyten_home_uom_event_time($post_type, $event_start_end_time) {
 
 	return $html;
 }
-
-function twentyten_home_uom_event_location($post_type, $event_location) {
-	$html = '';
-  if($post_type === 'uom_event') {
-    $html = $event_location;
-  }
-  else {
-    return $html = '';
-  }
-
-  return $html;
-}
-

@@ -13,7 +13,7 @@
 		<h2><?php echo get_the_title($post_id) ?></h2>
 
 		<?php
-			echo html_entity_decode( get_post_meta($post_id, 'event_start_end_time', true) );
+			echo html_entity_decode( get_post_meta($post_id, 'event_start_time', true) );
 			echo html_entity_decode( get_post_meta($post_id, 'event_location', true) );
 			echo html_entity_decode( get_post_meta($post_id, 'event_presenter', true) );
 			//echo html_entity_decode( get_post_meta($post_id, 'event_description', true) );

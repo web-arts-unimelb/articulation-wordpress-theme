@@ -132,8 +132,9 @@
 			$post_obj = get_post($post_id);
 			$post_type = $post_obj->post_type;
 			$meta = get_post_meta($post_id);
-			$event_start_end_time = $meta['event_start_end_time'][0];
+			$event_start_time = $meta['event_start_time'][0];
 			$event_location = $meta['event_location'][0];
+			$event_booking = $meta['event_booking'][0];
 		?>
 
 		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
@@ -149,8 +150,9 @@
 				<?php //the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
 				<?php echo html_entity_decode( get_post_field('post_content', $post_id) ); ?>			
 
-				<?php echo html_entity_decode( twentyten_home_uom_event_time($post_type, $event_start_end_time) ); ?>
-				<?php echo html_entity_decode( twentyten_home_uom_event_location($post_type, $event_location) ); ?>
+				<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_start_time) ); ?>
+				<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_location) ); ?>
+				<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_booking) ); ?>
 
 				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>
 			</div><!-- .entry-content -->
