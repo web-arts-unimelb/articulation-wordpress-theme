@@ -554,6 +554,13 @@ function __translate_page_id_to_entity_name($page_id=null)
 		elseif($page_id == "3841")
     {
         // Melbourne school of government
+        // This is for production site
+        $entity_name = "msog";
+    }
+		elseif($page_id == "4031")
+    {
+				// Melbourne school of government
+				// In dev and gary's local. It is different from production site
         $entity_name = "msog";
     }
     elseif($page_id == "1649")
@@ -596,6 +603,7 @@ function __translate_entity_name_to_category_id($entity_name=null)
     }
 		if($entity_name == "msog")
     {
+				// This is same in production, dev and gary's local
         $category_id = "26";
     }
     elseif($entity_name == "future_studies")
