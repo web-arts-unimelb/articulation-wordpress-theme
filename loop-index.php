@@ -147,12 +147,15 @@
 			</div><!-- .entry-summary -->
 	<?php else : ?>
 			<div class="entry-content">
-				<?php //the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'twentyten' ) ); ?>
-				<?php echo html_entity_decode( get_post_field('post_content', $post_id) ); ?>			
+				<?php if($post_type === 'uom_event'): ?>
+					<?php echo html_entity_decode( get_post_field('post_content', $post_id) ); ?>			
 
-				<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_start_time) ); ?>
-				<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_location) ); ?>
-				<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_booking) ); ?>
+					<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_start_time) ); ?>
+					<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_location) ); ?>
+					<?php echo html_entity_decode( twentyten_home_uom_event_entity_html($post_type, $event_booking) ); ?>	
+				<?php else: ?>	
+					<?php the_content(); ?>
+				<?php endif; ?>
 
 				<?php wp_link_pages( array( 'before' => '<div class="page-link">' . __( 'Pages:', 'twentyten' ), 'after' => '</div>' ) ); ?>
 			</div><!-- .entry-content -->
@@ -165,20 +168,27 @@
 		            </div><!-- .entry-meta -->
 				
 					<span class="cat-links">
-						<?php printf( __( '<span class="%1$s">Posted in</span> %2$s', 'twentyten' ), 'entry-utility-prep entry-utility-prep-cat-links', get_the_category_list( ', ' ) ); ?>
+						<?php
+							if($post_type == 'uom_event') {
+								printf( __( '<span class="%1$s">Posted in</span> %2$s', 'twentyten' ), 'entry-utility-prep entry-utility-prep-cat-links', twentyten_get_uom_event_category_list($post_id) );
+							}
+							else { 
+								printf( __( '<span class="%1$s">Posted in</span> %2$s', 'twentyten' ), 'entry-utility-prep entry-utility-prep-cat-links', get_the_category_list(', ', '', $post_id) ); 
+							}
+						?>
 					</span>
-					<span class="meta-sep">|</span>
 				<?php endif; ?>
 				<?php
 					$tags_list = get_the_tag_list( '', ', ' );
 					if ( $tags_list ):
 				?>
+					<span class="meta-sep">|</span>
 					<span class="tag-links">
 						<?php printf( __( '<span class="%1$s">Tagged</span> %2$s', 'twentyten' ), 'entry-utility-prep entry-utility-prep-tag-links', $tags_list ); ?>
 					</span>
-					<span class="meta-sep">|</span>
 				<?php endif; ?>
-				<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyten' ), __( '1 Comment', 'twentyten' ), __( '% Comments', 'twentyten' ) ); ?></span>
+				<!-- Hide comment -->
+				<!--<span class="comments-link"><?php comments_popup_link( __( 'Leave a comment', 'twentyten' ), __( '1 Comment', 'twentyten' ), __( '% Comments', 'twentyten' ) ); ?></span>-->
 				<?php edit_post_link( __( 'Edit', 'twentyten' ), '<span class="meta-sep">|</span> <span class="edit-link">', '</span>' ); ?>
 			</div><!-- .entry-utility -->
 		</div><!-- #post-## -->

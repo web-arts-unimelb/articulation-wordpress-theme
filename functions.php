@@ -471,7 +471,8 @@ if ( ! function_exists( 'twentyten_posted_on' ) ) :
  * @since Twenty Ten 1.0
  */
 function twentyten_posted_on() {
-	printf( __( '<span class="%1$s">Posted on</span> %2$s <span class="meta-sep">by</span> %3$s', 'twentyten' ),
+	// Gary: hide out who is the author
+	printf( __( '<span class="%1$s">Posted on</span> %2$s <!--<span class="meta-sep">by</span> %3$s-->', 'twentyten' ),
 		'meta-prep meta-prep-author',
 		sprintf( '<a href="%1$s" title="%2$s" rel="bookmark"><span class="entry-date">%3$s</span></a>',
 			get_permalink(),
@@ -813,4 +814,41 @@ function twentyten_home_uom_event_entity_html($post_type, $event_entity_html) {
 	}
 
 	return $html;
+}
+
+
+function twentyten_get_uom_event_category_list($post_id = '') {
+	global $wpdb;
+	
+	$output = '';
+	$sql = "
+SELECT
+	wp_terms.name,
+	wp_terms.term_id
+FROM
+	wp_term_relationships
+INNER JOIN wp_term_taxonomy
+	ON wp_term_relationships.term_taxonomy_id	= wp_term_taxonomy.term_taxonomy_id
+INNER JOIN wp_terms
+	ON wp_term_taxonomy.term_id = wp_terms.term_id
+WHERE
+	wp_term_relationships.object_id = $post_id;	
+	";
+
+	$res = $wpdb->get_results($sql);
+
+	//test
+	/*
+	echo "<pre>";
+	print_r($sql);
+	echo "</pre>";
+	*/
+
+	foreach($res as $item) {
+		$link = '<a href="/?cat='. $item->term_id. '">'. $item->name. '</a>'. ', ';
+		$output .= $link;
+	}
+	$output = substr($output, 0, -2);	
+
+	return $output;	
 }
