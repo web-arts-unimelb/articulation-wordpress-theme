@@ -568,7 +568,17 @@ function __translate_page_id_to_entity_name($page_id=null)
     {
         $entity_name = "future_studies";
     }
-    
+		elseif($page_id == "4972")
+    {
+			// Gary's local 
+			$entity_name = "dean_s_lecture";
+		}
+		elseif($page_id == "4975")
+    {
+			// Gary's local
+      $entity_name = "named_lecture";
+    }
+
     return $entity_name;    
 }
 
@@ -611,6 +621,16 @@ function __translate_entity_name_to_category_id($entity_name=null)
     {
         $category_id = "20";   
     }
+		elseif($entity_name == "dean_s_lecture")
+    {
+				// Gary's local 
+        $category_id = "73";
+    }
+		elseif($entity_name == "named_lecture")
+    {
+				// Gary's local
+        $category_id = "75";
+    }
     
     return $category_id;    
 }
@@ -618,28 +638,28 @@ function __translate_entity_name_to_category_id($entity_name=null)
 
 function _get_post_ids_by_event_time($category_array, $num_of_posts)
 {
+	$return_array = array();
+	
+	// NOTE: the category needs to be created first, then importing events.
 	$args = array(
 		'numberposts'     => -1,
         'offset'          => 0,
         'category__in'    => $category_array,
         'post_type'       => array('post', 'uom_event'),
         'post_status'     => 'publish' 
-    );
-    $posts = get_posts($args);
+  );
+  $posts = get_posts($args);
 
+	$post_array = array();
 	foreach($posts as $post)
 	{
 		$event_time = get_post_meta($post->ID, "event-time", true);
 		$post_array[$post->ID] = strtotime($event_time);
 	}
-	arsort($post_array);
-
-	//test
-	/*
-	echo "<pre>";
-	print_r($post_array);
-	echo "</pre>";
-	*/	
+	
+	if(!empty($post_array)) {
+		arsort($post_array);
+	}
 
 	$count = 0;
 	foreach($post_array as $post_id => $event_time)
