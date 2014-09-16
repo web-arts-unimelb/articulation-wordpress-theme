@@ -852,3 +852,34 @@ WHERE
 
 	return $output;	
 }
+
+
+function twentyten_home_get_all_posts() {
+	global $wpdb;
+  $sql = "
+    SELECT 
+      ID
+    FROM
+      wp_posts
+    WHERE
+      post_status = 'publish' AND
+      (
+        post_type = 'post' OR 
+        post_type = 'uom_event'
+      )
+    ORDER BY ID DESC 
+  ";
+  $result = $wpdb->get_results($sql, ARRAY_A);
+	$result = twentyten_home_two_d_to_one_d_array($result);
+
+	return $result;
+}
+
+
+function twentyten_home_two_d_to_one_d_array($array) {
+	$return = array();
+	foreach($array as $key => $item) {
+		$return[] = $item['ID'];
+	}
+	return $return;
+}

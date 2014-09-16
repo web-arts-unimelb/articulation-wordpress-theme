@@ -53,7 +53,26 @@
 	 *
 	 * Without further ado, the loop:
 	 */ ?>
-<?php while ( have_posts() ) : the_post(); ?>
+
+<?php
+	// http://codex.wordpress.org/Class_Reference/WP_Query
+	// http://wordpress.stackexchange.com/questions/120407/how-to-fix-pagination-for-custom-loops
+	$post_in = twentyten_home_get_all_posts();
+
+	$query = new WP_Query(
+		array(
+			'paged' => get_query_var('paged') ? get_query_var( 'paged' ) : 1,
+
+			'orderby' => 'ID',
+    	'order' => 'desc',
+    	'post_type' => array('uom_event', 'post'),
+			'post__in' => $post_in	
+		) 
+	);
+?>
+<?php while( $query->have_posts() ) : $query->the_post(); ?>
+
+<?php //while ( have_posts() ) : the_post(); ?>
 
 <?php /* How to display posts of the Gallery format. The gallery category is the old way. */ ?>
 
